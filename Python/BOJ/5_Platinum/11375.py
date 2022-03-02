@@ -3,14 +3,16 @@ import sys
 sys.setrecursionlimit(10**6)
 input = sys.stdin.readline
 
+
 def task_check(person):
     for task in people_task_list[person]:
         if not check[task]:
             check[task] = True
-            if tasks[task]==-1 or task_check(tasks[task]):
+            if tasks[task] == -1 or task_check(tasks[task]):
                 tasks[task] = person
                 return True
     return False
+
 
 N, M = map(int, input().split())
 people_task_list = [list(map(int, input().split()))[1:] for _ in range(N)]
