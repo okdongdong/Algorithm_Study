@@ -1,111 +1,68 @@
 N, M = map(int, input().split())
 
 nums = [list(input()) for _ in range(N)]
-
-square_num = [i**2 for i in range(3163)]    # 9자리까지의 모든 제곱수
 square_num_list = []
 
-# 행의 공차 d_r 열의 공차 d_C
-for d_c in range(1, M):
-    for d_r in range(1, N):
+
+def square_check(num):
+    if num**0.5 == int(num**0.5):
+        square_num_list.append(num)
+
+
+def create_num(R, C):
+    num = ''
+    i = 0
+    while i < len(R) and i < len(C):
+        r, c = R[i], C[i]
+        num += nums[r][c]
+        i += 1
+    return int(num)
+
+
+# 행의 공차 d_r 열의 공차 d_c
+for d_r in range(1, N+1):
+    for c in range(M):
         num = ''
         for r in range(0, N, d_r):
-            for c in range(0, M, d_c):
-                num += nums[r][c]
-        num = int(num)
-        if num**0.5 == int(num**0.5):
-            square_num_list.append(num)
+            num += nums[r][c]
 
-        num = ''
-        for c in range(0, M, d_c):
-            for r in range(N-1, -1, -d_r):
-                num += nums[r][c]
-        num = int(num)
-        if num**0.5 == int(num**0.5):
-            square_num_list.append(num)
+        square_check(int(num))
 
         num = ''
         for r in range(N-1, -1, -d_r):
-            for c in range(0, M, d_c):
-                num += nums[r][c]
-        num = int(num)
-        if num**0.5 == int(num**0.5):
-            square_num_list.append(num)
+            num += nums[r][c]
+
+        square_check(int(num))
+
+for d_c in range(1, M+1):
+    for r in range(N):
+        num = ''
+        for c in range(0, M, d_c):
+            num += nums[r][c]
+
+        square_check(int(num))
 
         num = ''
         for c in range(M-1, -1, -d_c):
-            for r in range(N-1, -1, -d_r):
-                num += nums[r][c]
-        num = int(num)
-        if num**0.5 == int(num**0.5):
-            square_num_list.append(num)
-        
+            num += nums[r][c]
 
-# d_r = 0
-# for d_c in range(1, M):
-#     for r in range(0, N, d_r):
-#         for c in range(0, M, d_c):
-#             num += nums[r][c]
-#     num = int(num)
-#     if num**0.5 == int(num**0.5):
-#         square_num_list.append(num)
+        square_check(int(num))
 
-#     num = ''
-#     for c in range(0, M, d_c):
-#         for r in range(N-1, -1, -d_r):
-#             num += nums[r][c]
-#     num = int(num)
-#     if num**0.5 == int(num**0.5):
-#         square_num_list.append(num)
+for d_c in range(1, M+1):
+    for d_r in range(1, N+1):
 
-#     num = ''
-#     for r in range(N-1, -1, -d_r):
-#         for c in range(0, M, d_c):
-#             num += nums[r][c]
-#     num = int(num)
-#     if num**0.5 == int(num**0.5):
-#         square_num_list.append(num)
+        RC_list = [
+            (range(0, N, d_r), range(0, M, d_c)),
+            (range(N-1, -1, -d_r), range(0, M, d_c)),
+            (range(0, N, d_r), range(M-1, -1, -d_c)),
+            (range(N-1, -1, -d_r), range(M-1, -1, -d_c))
+        ]
 
-#     num = ''
-#     for c in range(M-1, -1, -d_c):
-#         for r in range(N-1, -1, -d_r):
-#             num += nums[r][c]
-#     num = int(num)
-#     if num**0.5 == int(num**0.5):
-#         square_num_list.append(num)
-# d_c = 0
-# for d_r in range(1, N):
-#     num = ''
-#     for r in range(0, N, d_r):
-#         for c in range(0, M, d_c):
-#             num += nums[r][c]
-#     num = int(num)
-#     if num**0.5 == int(num**0.5):
-#         square_num_list.append(num)
+        for R, C in RC_list:
+            num = create_num(R, C)
+            square_check(num)
 
-#     num = ''
-#     for c in range(0, M, d_c):
-#         for r in range(N-1, -1, -d_r):
-#             num += nums[r][c]
-#     num = int(num)
-#     if num**0.5 == int(num**0.5):
-#         square_num_list.append(num)
-
-#     num = ''
-#     for r in range(N-1, -1, -d_r):
-#         for c in range(0, M, d_c):
-#             num += nums[r][c]
-#     num = int(num)
-#     if num**0.5 == int(num**0.5):
-#         square_num_list.append(num)
-
-#     num = ''
-#     for c in range(M-1, -1, -d_c):
-#         for r in range(N-1, -1, -d_r):
-#             num += nums[r][c]
-#     num = int(num)
-#     if num**0.5 == int(num**0.5):
-#         square_num_list.append(num)
-
-    # 완전제곱수 검사
-print(max(square_num_list))
+if square_num_list:
+    print(max(square_num_list))
+else:
+    print(-1)
