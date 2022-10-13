@@ -6,7 +6,7 @@ min_m = 0
 max_m = max(cities)
 
 while min_m <= max_m:
-    mid_m = (min_m + max_m)//2
+    mid_m = (min_m + max_m) // 2
 
     total_m = 0
 
